@@ -2,8 +2,8 @@ import React from 'react'
 import '../Styles/Booking.css'
 
 export const Booking = () => {
-    return (
 
+    return (
         <div>
             <h1>Seat Reservation Application</h1>
             <div id="mainContent">
