@@ -5,7 +5,7 @@ const initialState = {
     isLoading: false,
     isError: false,
 }
-const bookingReducer = (state = initialState, { type, payload }) => {
+export const bookingReducer = (state = initialState, { type, payload }) => {
     switch (type) {
         case BOOKING_IN_PROCESS: {
             return {

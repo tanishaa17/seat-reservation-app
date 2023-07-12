@@ -1,7 +1,21 @@
-import React from 'react'
+import React, { useState } from 'react'
 import '../Styles/Booking.css'
+import { useDispatch, useSelector } from 'react-redux';
+import { bookSeats } from '../Redux/Actions/bookingAction';
 
 export const Booking = () => {
+    const [bookSeat, setBookSeat] = useState(0);
+    // const { bookedSeats, isLoading, isError } = useSelector((store) => store.bookingReducer)
+    const dispatch = useDispatch()
+    const handleBooking = (e) => {
+        e.preventDefault()
+        dispatch(bookSeats(bookSeat));
+        // console.log(`Seat booked`)
+    }
+    const handleReset = (e) => {
+        e.preventDefault()
+        // console.log("Reset seats")
+    }
 
     return (
         <div>
@@ -22,11 +36,11 @@ export const Booking = () => {
                         </div>
                         <div id="inputDiv">
                             <label htmlFor=""> Number of seats:
-                                <input type="text" placeholder='Seats to be booked' name='seatNumber' />
-                                <button id='bookingBtn'> Book</button>
+                                <input type="text" placeholder='Seats to be booked' name='seatNumber' value={bookSeat} onChange={(e) => { setBookSeat(e.target.value) }} />
                             </label>
+                            <button id='bookingBtn' onClick={handleBooking}>Book</button>
                         </div>
-                        <button id='resetBtn' style={{ width: "80%", margin: "auto", padding: "0.5%", marginTop: "10px" }} >Reset all seats</button>
+                        <button type='submit' id='resetBtn' onClick={handleReset} style={{ width: "80%", margin: "auto", padding: "0.5%", marginTop: "10px" }} >Reset all seats</button>
 
                     </div>
                 </div>
