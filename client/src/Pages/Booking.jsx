@@ -4,8 +4,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { bookSeats } from '../Redux/Actions/bookingAction';
 
 export const Booking = () => {
-    const [seats, setSeats] = useState([]);
     const { bookedSeats, isLoading, isError } = useSelector((store) => store.bookingReducer)
+    const [seats, setSeats] = useState([]);
     const dispatch = useDispatch()
     const handleBooking = (e) => {
         e.preventDefault()
@@ -23,7 +23,7 @@ export const Booking = () => {
         e.preventDefault()
         setSeats([]);
     }
-
+    // console.log(bookedSeats.seats)
     return (
         <div>
             <h1>Seat Reservation Application</h1>
@@ -53,13 +53,23 @@ export const Booking = () => {
                     </div>
                 </div>
                 <div id='right'>
+                    {/* 
                     {bookedSeats.map((row, rowIndex) =>
                         row.map((col, colIndex) => (
                             <span className='seatDiv' key={`${rowIndex}-${colIndex}`}>
                                 {col}
                             </span>
                         ))
-                    )}
+                    )} */}
+                    <div>
+                        {bookedSeats.map(row => (
+                            <div key={Object.keys(row)[0]}>
+                                {Object.values(row).map(seat => (
+                                    <div className='seatDiv' key={seat.seatNumber} style={{ background: seat.status ? "green" : "white" }} >{seat.seatNumber} </div>
+                                ))}
+                            </div>
+                        ))}
+                    </div>
 
                 </div>
             </div>
