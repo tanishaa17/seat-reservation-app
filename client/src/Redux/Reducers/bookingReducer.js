@@ -1,77 +1,17 @@
 import { BOOKING_FAILED, BOOKING_IN_PROCESS, BOOKING_SUCCESS } from "../Actions/actionTypes";
 
-let flatArray = Array.from({ length: 80 }, (_, index) => index + 1);
 
-let array = [];
-while (flatArray.length) {
-    array.push(flatArray.splice(0, 7));
-}
-array.push(array.pop().splice(0, 3));
-
-// console.log(array)
-let demo = [
-    {
-        1: {
-            seatNumber: 1,
-            status: false
-        },
-        2: {
-            seatNumber: 2,
-            status: false
-        },
-        3: {
-            seatNumber: 3,
-            status: false
-        },
-        4: {
-            seatNumber: 4,
-            status: false
-        },
-        5: {
-            seatNumber: 5,
-            status: false
-        },
-        6: {
-            seatNumber: 6,
-            status: false
-        },
-        7: {
-            seatNumber: 7,
+const demo = Array.from({ length: 12 }, (_, index) =>
+    Array.from({ length: index === 11 ? 3 : 7 }, (_, seatIndex) => ({
+        [index * 7 + seatIndex + 1]: {
+            seatNumber: index * 7 + seatIndex + 1,
             status: false
         }
-    },
-    {
-        8: {
-            seatNumber: 8,
-            status: false
-        },
-        9: {
-            seatNumber: 9,
-            status: false
-        },
-        10: {
-            seatNumber: 10,
-            status: false
-        },
-        11: {
-            seatNumber: 11,
-            status: false
-        },
-        12: {
-            seatNumber: 12,
-            status: false
-        },
-        13: {
-            seatNumber: 13,
-            status: false
-        },
-        14: {
-            seatNumber: 14,
-            status: false
-        }
-    },
+    })).reduce((acc, curr) => ({ ...acc, ...curr }), {})
+);
 
-]
+
+
 const initialState = {
     bookedSeats: demo,
     isLoading: false,
@@ -120,7 +60,7 @@ export const bookingReducer = (state = initialState, { type, payload }) => {
                     }
                 }
             }
-            console.log(demo)
+            // console.log(demo)
         };
         case BOOKING_FAILED: {
             return {

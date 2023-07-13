@@ -20,8 +20,7 @@ export const Booking = () => {
         setSeats([])
     }
     const handleReset = (e) => {
-        e.preventDefault()
-        setSeats([]);
+        window.location.reload()
     }
     // console.log(bookedSeats.seats)
     return (
@@ -52,26 +51,18 @@ export const Booking = () => {
 
                     </div>
                 </div>
-                <div id='right'>
-                    {/* 
-                    {bookedSeats.map((row, rowIndex) =>
-                        row.map((col, colIndex) => (
-                            <span className='seatDiv' key={`${rowIndex}-${colIndex}`}>
-                                {col}
-                            </span>
-                        ))
-                    )} */}
-                    <div>
-                        {bookedSeats.map(row => (
-                            <div key={Object.keys(row)[0]}>
-                                {Object.values(row).map(seat => (
-                                    <div className='seatDiv' key={seat.seatNumber} style={{ background: seat.status ? "green" : "white" }} >{seat.seatNumber} </div>
-                                ))}
-                            </div>
-                        ))}
-                    </div>
 
+                <div id='right'>
+                    {bookedSeats.map((row, index) => (
+                        <div key={index} className="row">
+                            {Object.values(row).map(seat => (
+                                <div className='seatDiv' key={seat.seatNumber} style={{ background: seat.status ? "#040035" : "#484468" }} >{seat.seatNumber} </div>
+                            ))}
+                        </div>
+                    ))}
                 </div>
+
+
             </div>
         </div>
     )

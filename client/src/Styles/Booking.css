@@ -81,10 +81,11 @@ input {
     cursor: pointer;
 }
 
+
 #right {
     width: 50%;
-    display: grid;
-    grid-template-columns: repeat(7, 40px);
+    display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     gap: 20px;
@@ -94,14 +95,19 @@ input {
     font-weight: 500;
 }
 
+.row {
+    display: flex;
+}
+
 .seatDiv {
     height: 50px;
+    width: 50px;
     display: flex;
     align-items: center;
     justify-content: center;
     background-color: #484468;
     border: 2px solid white;
     border-radius: 5px;
-    margin-top: 20px;
+    margin-right: 20px;
     cursor: pointer;
 }
