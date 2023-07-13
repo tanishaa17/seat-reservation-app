@@ -60,10 +60,10 @@ export const Booking = () => {
                                 <div className="emptyColorStatus"></div>
                                 <span>Available Seats</span>
                             </div>
-                            <div id='currentBookedSeats'>
+                            {/* <div id='currentBookedSeats'>
                                 <span>Current Booked Seats : No Seats booked yet</span>
 
-                            </div>
+                            </div> */}
                             <div id="inputDiv">
                                 <label htmlFor=""> Number of seats:
                                     <input type="text" placeholder='Seats to be booked' name='seatNumber' value={seats} onChange={(e) => { setSeats(e.target.value) }} />
