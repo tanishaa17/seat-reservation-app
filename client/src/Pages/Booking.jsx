@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import '../Styles/Booking.css'
 import { ToastContainer } from 'react-toastify';
 import { toast } from 'react-toastify';
@@ -9,9 +9,12 @@ import { bookSeats } from '../Redux/Actions/bookingAction';
 
 
 export const Booking = () => {
-    const { bookedSeats, isLoading } = useSelector((store) => store.bookingReducer)
+    const { bookedSeats, bookedSeatNumbers, isLoading } = useSelector((store) => store.bookingReducer)
     const [seats, setSeats] = useState([]);
-    const dispatch = useDispatch()
+    const [currentBookedSeats, setCurrentBookedSeats] = useState([]);
+
+    const dispatch = useDispatch();
+
     const handleBooking = (e) => {
         e.preventDefault()
         const numberOfSeats = {
@@ -22,12 +25,19 @@ export const Booking = () => {
         if (seats < 1) toast.error(`Minimum number of seats should be 1`);
         else if (seats > 7) toast.error(`You can't book more than 7 seats`);
         else dispatch(bookSeats(numberOfSeats));
+        // localStorage.setItem('currentSeats', JSON.stringify(bookedSeatNumbers));
         setSeats([])
     }
+    // console.log(currentBookedSeats);
     const handleReset = (e) => {
         window.location.reload()
     }
     // console.log(bookedSeats.seats)
+
+    useEffect(() => {
+        setCurrentBookedSeats(bookedSeatNumbers);
+    }, [bookedSeatNumbers]);
+
     return (
         <div>
             <ToastContainer />
@@ -51,7 +61,15 @@ export const Booking = () => {
                                 <span>Available Seats</span>
                             </div>
                             <div id='currentBookedSeats'>
-                                <span>Current Booked Seats: </span>
+                                <span>Current Booked Seats :{bookedSeatNumbers.length > 0 ? (
+                                    <div key={bookedSeatNumbers}>
+                                        {
+                                            bookedSeatNumbers.map((seats) => {
+                                                return <div id='currentSeats' >{seats}</div>
+                                            })
+                                        }
+                                    </div>
+                                ) : " No Seats booked yet"}</span>
 
                             </div>
                             <div id="inputDiv">
@@ -60,7 +78,9 @@ export const Booking = () => {
                                 </label>
                                 <button id='bookingBtn' onClick={handleBooking}>Book</button>
                             </div>
-                            <button type='submit' id='resetBtn' onClick={handleReset} style={{ width: "80%", margin: "auto", padding: "0.5%", marginTop: "10px" }} >Reset all seats</button>
+                            <button type='submit' id='resetBtn' onClick={handleReset} style={{
+                                width: "80%", margin: "auto", padding: "1%", marginTop: "10px", fontWeight: "600", backgroundColor: "#484468", color: "white", border: "none", cursor: "pointer"
+                            }} >Reset all seats</button>
 
                         </div>
                     </div>

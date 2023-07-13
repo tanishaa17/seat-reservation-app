@@ -1,5 +1,8 @@
-import { BOOKING_FAILED, BOOKING_IN_PROCESS, BOOKING_SUCCESS } from "../Actions/actionTypes";
-
+import {
+    BOOKING_FAILED,
+    BOOKING_IN_PROCESS,
+    BOOKING_SUCCESS
+} from "../Actions/actionTypes";
 
 const demo = Array.from({ length: 12 }, (_, index) =>
     Array.from({ length: index === 11 ? 3 : 7 }, (_, seatIndex) => ({
@@ -12,18 +15,19 @@ const demo = Array.from({ length: 12 }, (_, index) =>
 
 const initialState = {
     bookedSeats: demo,
+    bookedSeatNumbers: [], // To store the booked seat numbers
     isLoading: false,
-    isError: false,
-}
-// console.log(array)
+    isError: false
+};
+
 export const bookingReducer = (state = initialState, { type, payload }) => {
     switch (type) {
         case BOOKING_IN_PROCESS: {
             return {
                 ...state,
                 isLoading: true
-            }
-        };
+            };
+        }
         case BOOKING_SUCCESS: {
             let bookedSlots = 0;
             let slotsToBooked = payload.seats;
@@ -40,25 +44,23 @@ export const bookingReducer = (state = initialState, { type, payload }) => {
                     if (!obj[key].status) {
                         slotsAvailable++;
                     }
-                }
-                if (slotsAvailable >= slotsToBooked) {
+                } if (slotsAvailable >= slotsToBooked) {
                     for (let j = 0; j < keys.length; j++) {
                         let key = keys[j];
                         if (!obj[key].status) {
                             obj[key].status = true;
                             bookedSlots++;
+                            state.bookedSeatNumbers.push(obj[key].seatNumber);
                             if (bookedSlots == slotsToBooked) {
-                                findConsecutiveSlots = true
+                                findConsecutiveSlots = true;
                                 break;
                             }
                         }
-                    }
-                    if (bookedSlots == slotsToBooked) {
+                    } if (bookedSlots == slotsToBooked) {
                         break;
                     }
                 }
             }
-
 
             // If no consecutive slots were found, book the nearest separate slots
 
@@ -72,6 +74,7 @@ export const bookingReducer = (state = initialState, { type, payload }) => {
                         if (!obj[key].status) {
                             obj[key].status = true;
                             bookedSlots++;
+                            state.bookedSeatNumbers.push(obj[key].seatNumber); // Add the seat number to bookedSeatNumbers
                             if (bookedSlots == slotsToBooked) {
                                 break;
                             }
@@ -82,19 +85,18 @@ export const bookingReducer = (state = initialState, { type, payload }) => {
                     }
                 }
             }
-            console.log(demo)
-        };
+            // console.log(demo);
+        }
 
         case BOOKING_FAILED: {
             return {
                 ...state,
                 isLoading: false,
                 isError: true
-            }
+            };
         }
         default: {
-            return state
+            return state;
         }
-
     }
-}
+};

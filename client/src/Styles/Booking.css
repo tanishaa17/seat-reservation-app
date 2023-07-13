@@ -57,25 +57,24 @@ h1,
     border: 1px solid white;
 }
 
-#currentBookedSeats {
+#currentBookedSeats,
+#inputDiv {
     color: white;
     display: flex;
+    padding: 1%;
 }
 
-#inputDiv {
-    display: flex;
-    color: white;
-}
+
 
 input {
     margin-left: 10px;
     border: none;
     text-align: center;
     font-weight: 500;
+    height: 25px;
 }
 
-#bookingBtn,
-#resetBtn {
+#bookingBtn {
     border: none;
     background-color: #484468;
     color: white;
