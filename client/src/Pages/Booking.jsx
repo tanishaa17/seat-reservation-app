@@ -4,13 +4,20 @@ import { useDispatch, useSelector } from 'react-redux';
 import { bookSeats } from '../Redux/Actions/bookingAction';
 
 export const Booking = () => {
-    const [bookSeat, setBookSeat] = useState(0);
+    const [seats, setSeats] = useState(0);
     // const { bookedSeats, isLoading, isError } = useSelector((store) => store.bookingReducer)
     const dispatch = useDispatch()
     const handleBooking = (e) => {
         e.preventDefault()
-        dispatch(bookSeats(bookSeat));
-        // console.log(`Seat booked`)
+        const numberOfSeats = {
+            seats
+        }
+        // console.log(numberOfSeats)
+        // console.log(`Seat booked ${numberOfSeats.seats}`)
+        if (seats < 1) alert(`Minimum number of seats should be 1`);
+        else if (seats > 7) alert(`You can't book more than 7 seats`);
+        else dispatch(bookSeats(numberOfSeats))
+        alert(`${numberOfSeats.seats} Seats booked successfully`)
     }
     const handleReset = (e) => {
         e.preventDefault()
@@ -36,7 +43,7 @@ export const Booking = () => {
                         </div>
                         <div id="inputDiv">
                             <label htmlFor=""> Number of seats:
-                                <input type="text" placeholder='Seats to be booked' name='seatNumber' value={bookSeat} onChange={(e) => { setBookSeat(e.target.value) }} />
+                                <input type="text" placeholder='Seats to be booked' name='seatNumber' value={seats} onChange={(e) => { setSeats(e.target.value) }} />
                             </label>
                             <button id='bookingBtn' onClick={handleBooking}>Book</button>
                         </div>

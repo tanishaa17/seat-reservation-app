@@ -10,8 +10,7 @@ export const bookSeats = (seats) => async (dispatch) => {
     try {
         const res = await api.post(`/book-seats`, seats);
         dispatch({ type: BOOKING_SUCCESS, payload: res.data })
-        console.log(res.data);
-        alert(`Seats booked successfully`)
+        // console.log(res.data);
     } catch (error) {
         dispatch({ type: BOOKING_FAILED, payload: error });
         console.log(error)
