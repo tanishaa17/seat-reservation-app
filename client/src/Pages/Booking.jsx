@@ -61,15 +61,7 @@ export const Booking = () => {
                                 <span>Available Seats</span>
                             </div>
                             <div id='currentBookedSeats'>
-                                <span>Current Booked Seats :{bookedSeatNumbers.length > 0 ? (
-                                    <div key={bookedSeatNumbers}>
-                                        {
-                                            bookedSeatNumbers.map((seats) => {
-                                                return <div id='currentSeats' >{seats}</div>
-                                            })
-                                        }
-                                    </div>
-                                ) : " No Seats booked yet"}</span>
+                                <span>Current Booked Seats : No Seats booked yet</span>
 
                             </div>
                             <div id="inputDiv">
