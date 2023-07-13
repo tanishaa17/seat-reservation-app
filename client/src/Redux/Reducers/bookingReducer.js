@@ -10,8 +10,6 @@ const demo = Array.from({ length: 12 }, (_, index) =>
     })).reduce((acc, curr) => ({ ...acc, ...curr }), {})
 );
 
-
-
 const initialState = {
     bookedSeats: demo,
     isLoading: false,
@@ -29,6 +27,10 @@ export const bookingReducer = (state = initialState, { type, payload }) => {
         case BOOKING_SUCCESS: {
             let bookedSlots = 0;
             let slotsToBooked = payload.seats;
+            let findConsecutiveSlots = false;
+
+            // First, try to find consecutive slots
+
             for (let i = 0; i < demo.length; i++) {
                 let obj = demo[i];
                 let keys = Object.keys(obj);
@@ -46,6 +48,7 @@ export const bookingReducer = (state = initialState, { type, payload }) => {
                             obj[key].status = true;
                             bookedSlots++;
                             if (bookedSlots == slotsToBooked) {
+                                findConsecutiveSlots = true
                                 break;
                             }
                         }
@@ -55,7 +58,31 @@ export const bookingReducer = (state = initialState, { type, payload }) => {
                     }
                 }
             }
-            // console.log(demo)
+
+
+            // If no consecutive slots were found, book the nearest separate slots
+
+            if (!findConsecutiveSlots) {
+                bookedSlots = 0;
+                for (let i = 0; i < demo.length; i++) {
+                    let obj = demo[i];
+                    let keys = Object.keys(obj);
+                    for (let j = 0; j < keys.length; j++) {
+                        let key = keys[j];
+                        if (!obj[key].status) {
+                            obj[key].status = true;
+                            bookedSlots++;
+                            if (bookedSlots == slotsToBooked) {
+                                break;
+                            }
+                        }
+                    }
+                    if (bookedSlots == slotsToBooked) {
+                        break;
+                    }
+                }
+            }
+            console.log(demo)
         };
 
         case BOOKING_FAILED: {
