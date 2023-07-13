@@ -1,12 +1,17 @@
 import {
     legacy_createStore,
     applyMiddleware,
-    compose,
+    combineReducers,
+    compose
 } from "redux";
 // import { composeWithDevTools } from "redux-devtools-extension";
 
 import thunk from "redux-thunk";
 import { bookingReducer } from "./Reducers/bookingReducer";
+
+const reducer = combineReducers({
+    bookingReducer: bookingReducer
+});
 
 const composeEnhancers =
     (typeof window !== "undefined" &&
@@ -14,6 +19,6 @@ const composeEnhancers =
     compose;
 
 export const store = legacy_createStore(
-    bookingReducer,
+    reducer,
     composeEnhancers(applyMiddleware(thunk))
 );
