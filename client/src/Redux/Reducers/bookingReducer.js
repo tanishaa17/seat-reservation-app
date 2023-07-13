@@ -27,29 +27,24 @@ export const bookingReducer = (state = initialState, { type, payload }) => {
             }
         };
         case BOOKING_SUCCESS: {
-
-
             let bookedSlots = 0;
             let slotsToBooked = payload.seats;
             for (let i = 0; i < demo.length; i++) {
                 let obj = demo[i];
                 let keys = Object.keys(obj);
                 let slotsAvailable = 0;
-
                 for (let j = 0; j < keys.length; j++) {
                     let key = keys[j];
                     if (!obj[key].status) {
                         slotsAvailable++;
                     }
                 }
-
                 if (slotsAvailable >= slotsToBooked) {
                     for (let j = 0; j < keys.length; j++) {
                         let key = keys[j];
                         if (!obj[key].status) {
                             obj[key].status = true;
                             bookedSlots++;
-
                             if (bookedSlots == slotsToBooked) {
                                 break;
                             }
@@ -62,6 +57,7 @@ export const bookingReducer = (state = initialState, { type, payload }) => {
             }
             // console.log(demo)
         };
+
         case BOOKING_FAILED: {
             return {
                 ...state,
